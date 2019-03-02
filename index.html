@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>FCC CheckCashRegister</title>
+</head>
+<body>
+    <p><em>Here is the checkCashRegister FreeCodeCamp challenge that you can find <a target="_blank" href="https://learn.freecodecamp.org/javascript-algorithms-and-data-structures/javascript-algorithms-and-data-structures-projects/cash-register">here</a></em></p>
+    <br>
+    <img src="FCC_Screenshot.png" alt="Directives from the FCC challenge">
+    <br>
+    <p><em>Psst: have a look at the JavaScript Console and enter the following as an exemple to test the function</em> 💁</p>
+    <br>
+    <p><em>checkCashRegister(19.5, 20, [["PENNY", 0.01], ["NICKEL", 0], ["DIME", 0], ["QUARTER", 0], ["ONE", 1], ["FIVE", 0], ["TEN", 0], ["TWENTY", 0], ["ONE HUNDRED", 0]]);</em></p>
+    
+
+    <script>
+        
+        function checkCashRegister(price, cash, cid) {
+            var change = cash-price;
+            var cidTotal = Number(cid.map((a) => a[1]).reduce((a, b) => a + b).toFixed(2));
+            var register = {
+                "status":"INSUFFICIENT_FUNDS",
+                "change":[]
+            };
+            var currency = [100,20,10,5,1,0.25,0.1,0.05,0.01];
+            var res = [];
+
+            function availCid(a) {
+                return a.map((a) => a[1]).reverse()[currency.indexOf(currency.find(a => a < change))];
+            }
+
+            function howMuchFromThisBill(currencyindex) {
+                var total = 0;
+                while(change >= currencyindex) {
+                    total += currencyindex;
+                    change = (change - currencyindex).toFixed(2);
+                } return Number(total.toFixed(2));
+            }
+            
+            function returnChange() {
+            
+                while (change !== 0) {
+                    cid.reverse().map(function (a, index) {
+                        if((change > currency[index]) && (change >= a[1])){
+                            res.push(a);
+                            change = (change - a[1]).toFixed(2);
+                        } else if ((change > currency[index]) && (change <= a[1])) {
+                            res.push([a[0], howMuchFromThisBill(currency[index])]);
+                        }
+                    });
+                } return res;
+            }
+
+            return (change < cidTotal) && (availCid(cid) !== 0) ? {
+                "status": register[status] = "OPEN",
+                "change" : register[change] = returnChange()
+            } : change === cidTotal ? {
+                "status": register[status] = "CLOSED",
+                "change": register[change] = cid
+            } : register;
+            
+        }
+
+    </script>
+</body>
+</html>
