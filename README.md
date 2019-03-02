@@ -1,0 +1,1 @@
+# FreeCodeCamp-checkCashRegister-Challenge
